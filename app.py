@@ -166,7 +166,8 @@ if st.session_state.history:
         user = st.session_state.history[i]["content"]
         bot = st.session_state.history[i + 1]["content"]
         emotion = st.session_state.emotion_tags[i // 2]
-        full_chat += f"You ({emotion}): {user}\nBot: {bot}\n\n"
+        full_chat += f"You ({emotion}): {user}\nAIA: {bot}\n\n"
 
     filename = f"chat_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-    st.download_button("💾 Download Chat", full_chat, file_name=filename)
+    st.download_button("💾 Download Chat with AIA", full_chat, file_name=filename)
+
