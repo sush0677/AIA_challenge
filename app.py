@@ -1,7 +1,6 @@
 import streamlit as st
 from transformers import pipeline
 from groq import Groq
-import os
 
 # ------------------------
 # Load Emotion Classifier
@@ -15,49 +14,61 @@ emotion_classifier = pipeline(
 # ------------------------
 # Initialize Groq Client
 # ------------------------
-GROQ_API_KEY = "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"  # <-- Replace this with your actual API key
+GROQ_API_KEY = "your_groq_api_key_here"  # <-- Replace this with your API key
 client = Groq(api_key=GROQ_API_KEY)
+
+# ------------------------
+# Initialize Chat History
+# ------------------------
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 # ------------------------
 # Streamlit UI
 # ------------------------
-st.title("🧠 Emotion-Aware Chatbot with Groq 🤖")
-st.markdown("This chatbot adapts its tone based on the emotion detected in your message.")
+st.title("🧠 Emotion-Aware Chatbot with Memory 🤖")
+st.markdown("Talk to the bot and it will respond based on your emotion. Your conversation will be remembered during this session.")
 
-user_input = st.text_input("You:", placeholder="Type something...")
+# Show chat history
+for msg in st.session_state.history:
+    role = "🧑 You" if msg["role"] == "user" else "🤖 Bot"
+    with st.chat_message(role):
+        st.markdown(msg["content"])
+
+# User input
+user_input = st.chat_input("Say something...")
 
 if user_input:
+    # Add user input to chat history
+    st.session_state.history.append({"role": "user", "content": user_input})
+
     # Detect Emotion
     emotion_result = emotion_classifier(user_input)
     detected_emotion = emotion_result[0]['label']
 
-    # Show detected emotion
-    st.markdown(f"**Detected Emotion:** `{detected_emotion}`")
-
-    # Construct dynamic prompt for Groq
+    # Construct dynamic prompt
     prompt = f"""
 You are a kind and emotionally aware AI assistant.
-A user just sent this message: "{user_input}"
+A user just said: "{user_input}"
 The emotion detected in their message is: {detected_emotion}.
 
-Please respond in a way that reflects their emotional state:
-- If sadness → comfort them.
-- If joy → encourage them.
-- If anger → stay calm and offer help.
-- If fear → reassure them.
-- If surprise → show curiosity.
-- If disgust → acknowledge and move on.
-- If neutral → respond professionally.
+Respond in a way that reflects their emotional state:
+- sadness → comfort them.
+- joy → be cheerful and positive.
+- anger → stay calm and supportive.
+- fear → be reassuring.
+- surprise → be curious and amazed.
+- disgust → acknowledge and change topic.
+- neutral → be professional and friendly.
 
-Now, reply to the user:
+Now reply to the user:
 """
 
-    # Display streamed response
-    st.markdown("**Bot Response:**")
-    response_placeholder = st.empty()
+    # Display bot response (streaming)
+    with st.chat_message("🤖 Bot"):
+        response_placeholder = st.empty()
+        streamed_response = ""
 
-    streamed_response = ""
-    with st.spinner("Thinking..."):
         completion = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[
@@ -76,3 +87,5 @@ Now, reply to the user:
             streamed_response += content_piece
             response_placeholder.markdown(streamed_response)
 
+        # Save bot reply to history
+        st.session_state.history.append({"role": "assistant", "content": streamed_response})
