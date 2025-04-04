@@ -92,7 +92,6 @@ for i in range(0, len(st.session_state.history), 2):
         )
 
 
-
 # ------------------------
 # User Input Field
 # ------------------------
