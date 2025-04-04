@@ -151,7 +151,6 @@ Now, respond to the user:
             response_placeholder.markdown(streamed_response)
 
         st.session_state.history.append({"role": "assistant", "content": streamed_response})
-        # Show Detected Emotion and Bot Reply Immediately (Before Download Option)
         st.markdown("---")
         st.subheader("🧠 AIA's Emotional Insight")
         st.markdown(f"- **Detected Emotion:** `{detected_emotion}`")
