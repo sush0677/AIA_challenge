@@ -15,7 +15,7 @@ emotion_classifier = pipeline(
 # ------------------------
 # Initialize Groq Client
 # ------------------------
-GROQ_API_KEY = "your_groq_api_key_here"  # <-- Replace this with your actual API key
+GROQ_API_KEY = "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"  # <-- Replace this with your actual API key
 client = Groq(api_key=GROQ_API_KEY)
 
 # ------------------------
