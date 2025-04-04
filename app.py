@@ -126,7 +126,7 @@ Now, respond to the user:
 
 
     # Stream Groq response
-    with st.chat_message("AIA"):
+    with st.chat_message("🤖 AIA"):
         response_placeholder = st.empty()
         streamed_response = ""
 
