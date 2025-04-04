@@ -84,7 +84,7 @@ for i in range(0, len(st.session_state.history), 2):
         )
 
     # Display Bot Message
-    with st.chat_message("🤖 Bot"):
+    with st.chat_message("🤖 AIA"):
         st.markdown(
             f"<div style='background-color:#f0f0f0; padding:10px; border-radius:10px'>"
             f"{bot_msg}</div>",
