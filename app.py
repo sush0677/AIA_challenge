@@ -150,11 +150,20 @@ Now, respond to the user:
             response_placeholder.markdown(streamed_response)
 
         st.session_state.history.append({"role": "assistant", "content": streamed_response})
-        st.markdown("---")
-        st.subheader("🧠 AIA's Emotional Insight")
-        st.markdown(f"- **Detected Emotion:** `{detected_emotion}`")
-        st.markdown(f"- **AIA's Response:**")
-        st.info(streamed_response)
+        # Display real-time insight right after response
+        with st.container():
+            st.markdown("### 💬 Latest Interaction")
+            
+            st.markdown(f"""
+            <div style="padding:15px; border-radius:10px; background-color:#e8f0fe;">
+                <b>🧑 You:</b><br>
+                {user_input}<br><br>
+                <b>🧠 Emotion Detected:</b> <code>{detected_emotion}</code><br><br>
+                <b>🤖 AIA:</b><br>
+                {streamed_response}
+            </div>
+            """, unsafe_allow_html=True)
+
 
 # ------------------------
 # Download Conversation Button
