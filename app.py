@@ -91,6 +91,8 @@ for i in range(0, len(st.session_state.history), 2):
             unsafe_allow_html=True
         )
 
+
+
 # ------------------------
 # User Input Field
 # ------------------------
@@ -149,6 +151,12 @@ Now, respond to the user:
             response_placeholder.markdown(streamed_response)
 
         st.session_state.history.append({"role": "assistant", "content": streamed_response})
+        # Show Detected Emotion and Bot Reply Immediately (Before Download Option)
+        st.markdown("---")
+        st.subheader("🧠 AIA's Emotional Insight")
+        st.markdown(f"- **Detected Emotion:** `{detected_emotion}`")
+        st.markdown(f"- **AIA's Response:**")
+        st.info(streamed_response)
 
 # ------------------------
 # Download Conversation Button
