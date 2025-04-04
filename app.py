@@ -27,10 +27,19 @@ if "emotion_tags" not in st.session_state:
     st.session_state.emotion_tags = []
 
 # ------------------------
-# UI Header
+# Streamlit UI Header for AIA
 # ------------------------
-st.title("🧠 Emotion-Aware Chatbot with Groq 🤖")
-st.markdown("Adapts responses based on your emotional state. Now with full context and export options.")
+st.set_page_config(page_title="AIA - Emotion-Aware Chatbot", page_icon="🤖")
+
+st.title("🤖 AIA - Emotion-Aware Chatbot")
+st.markdown("""
+### 🧠 Meet AIA
+**AIA** is your Emotion-Aware AI Assistant powered by LLaMA 3 and Hugging Face.
+
+It detects how you're feeling — sadness, joy, anger, and more — and replies with empathy and intelligence.
+
+Type a message below and see AIA respond to your emotion in real time.
+""")
 
 # ------------------------
 # Reset Chat Button
