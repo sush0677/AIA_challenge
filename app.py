@@ -19,6 +19,7 @@ emotion_classifier = pipeline(
 # ------------------------
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
 # ------------------------
 # Setup session state
 # ------------------------
@@ -68,14 +69,13 @@ emotion_colors = {
 # ------------------------
 for i in range(0, len(st.session_state.history), 2):
     if i + 1 >= len(st.session_state.history):
-        break  # Skip if bot response isn't yet available
+        break  # Skip incomplete pairs
 
     user_msg = st.session_state.history[i]["content"]
     bot_msg = st.session_state.history[i + 1]["content"]
     emotion = st.session_state.emotion_tags[i // 2]
     bg_color = emotion_colors.get(emotion, "#ffffff")
 
-    # Display User Message
     with st.chat_message("🧑 You"):
         st.markdown(
             f"<div style='background-color:{bg_color}; padding:10px; border-radius:10px'>"
@@ -84,7 +84,6 @@ for i in range(0, len(st.session_state.history), 2):
             unsafe_allow_html=True
         )
 
-    # Display Bot Message
     with st.chat_message("🤖 AIA"):
         st.markdown(
             f"<div style='background-color:#f0f0f0; padding:10px; border-radius:10px'>"
@@ -92,22 +91,21 @@ for i in range(0, len(st.session_state.history), 2):
             unsafe_allow_html=True
         )
 
-
 # ------------------------
 # User Input Field
 # ------------------------
 user_input = st.chat_input("Say something...")
 
 if user_input:
-    # Append user message to history
+    # Append user input to chat history
     st.session_state.history.append({"role": "user", "content": user_input})
 
-    # Emotion detection
+    # Detect Emotion
     emotion_result = emotion_classifier(user_input)
     detected_emotion = emotion_result[0]['label']
     st.session_state.emotion_tags.append(detected_emotion)
 
-    # Prompt to Groq
+    # Create Prompt for AIA
     prompt = f"""
 You are AIA, an emotionally intelligent AI assistant that adapts to the user's emotional tone.
 
@@ -126,7 +124,6 @@ Please respond as AIA in a way that reflects their emotional state:
 Now, respond to the user:
 """
 
-
     # Stream Groq response
     with st.chat_message("🤖 AIA"):
         response_placeholder = st.empty()
@@ -142,7 +139,6 @@ Now, respond to the user:
             max_tokens=1024,
             top_p=1,
             stream=True,
-            stop=None,
         )
 
         for chunk in completion:
@@ -150,29 +146,29 @@ Now, respond to the user:
             streamed_response += content_piece
             response_placeholder.markdown(streamed_response)
 
-        st.session_state.history.append({"role": "assistant", "content": streamed_response})
-        # Display real-time insight right after response
-        with st.container():
-            st.markdown("### 💬 Latest Interaction")
-            
-            st.markdown(f"""
-            <div style="padding:15px; border-radius:10px; background-color:#e8f0fe;">
-                <b>🧑 You:</b><br>
-                {user_input}<br><br>
-                <b>🧠 Emotion Detected:</b> <code>{detected_emotion}</code><br><br>
-                <b>🤖 AIA:</b><br>
-                {streamed_response}
-            </div>
-            """, unsafe_allow_html=True)
+    # Append bot response to history
+    st.session_state.history.append({"role": "assistant", "content": streamed_response})
 
+    # Display latest interaction
+    st.markdown("### 💬 Latest Interaction")
+    st.markdown(f"""
+    <div style="padding:15px; border-radius:10px; background-color:#e8f0fe;">
+        <b>🧑 You:</b><br>
+        {user_input}<br><br>
+        <b>🧠 Emotion Detected:</b> <code>{detected_emotion}</code><br><br>
+        <b>🤖 AIA:</b><br>
+        {streamed_response}
+    </div>
+    """, unsafe_allow_html=True)
 
 # ------------------------
-# Download Conversation Button
+# Download Chat History Button
 # ------------------------
 if st.session_state.history:
     full_chat = ""
     for i in range(0, len(st.session_state.history), 2):
-        if i + 1 >= len(st.session_state.history): break
+        if i + 1 >= len(st.session_state.history):
+            break
         user = st.session_state.history[i]["content"]
         bot = st.session_state.history[i + 1]["content"]
         emotion = st.session_state.emotion_tags[i // 2]
@@ -180,4 +176,3 @@ if st.session_state.history:
 
     filename = f"chat_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     st.download_button("💾 Download Chat with AIA", full_chat, file_name=filename)
-
