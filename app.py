@@ -92,6 +92,26 @@ for i in range(0, len(st.session_state.history), 2):
         )
 
 # ------------------------
+# Sidebar: Model Selection
+# ------------------------
+st.sidebar.title("🛠️ AIA Settings")
+model_choice = st.sidebar.selectbox("🧬 Choose Groq Model", [
+    "LLaMA 3.1 (8B) - Groq",
+    "Qwen-2.5 (32B) - Groq",
+    "DeepSeek-R1 Distill Qwen (32B) - Groq",
+    "Gemma2-9B-IT - Groq"
+])
+
+# Map UI name to actual Groq model ID
+model_map = {
+    "LLaMA 3.1 (8B) - Groq": "llama-3.1-8b-instant",
+    "Qwen-2.5 (32B) - Groq": "qwen-2.5-32b",
+    "DeepSeek-R1 Distill Qwen (32B) - Groq": "deepseek-r1-distill-qwen-32b",
+    "Gemma2-9B-IT - Groq": "gemma2-9b-it"
+}
+selected_model_id = model_map[model_choice]
+
+# ------------------------
 # User Input Field
 # ------------------------
 user_input = st.chat_input("Say something...")
@@ -130,6 +150,7 @@ Now, respond to the user:
         streamed_response = ""
 
         completion = client.chat.completions.create(
+            model=selected_model_id,
             model="llama-3.1-8b-instant",
             messages=[
                 {"role": "system", "content": "You are a friendly, emotionally intelligent chatbot."},
@@ -176,22 +197,4 @@ if st.session_state.history:
 
     filename = f"chat_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     st.download_button("💾 Download Chat with AIA", full_chat, file_name=filename)
-# ------------------------
-# Sidebar: Model Selection
-# ------------------------
-st.sidebar.title("🛠️ AIA Settings")
-model_choice = st.sidebar.selectbox("🧬 Choose Groq Model", [
-    "LLaMA 3.1 (8B) - Groq",
-    "Qwen-2.5 (32B) - Groq",
-    "DeepSeek-R1 Distill Qwen (32B) - Groq",
-    "Gemma2-9B-IT - Groq"
-])
 
-# Map UI name to actual Groq model ID
-model_map = {
-    "LLaMA 3.1 (8B) - Groq": "llama-3.1-8b-instant",
-    "Qwen-2.5 (32B) - Groq": "qwen-2.5-32b",
-    "DeepSeek-R1 Distill Qwen (32B) - Groq": "deepseek-r1-distill-qwen-32b",
-    "Gemma2-9B-IT - Groq": "gemma2-9b-it"
-}
-selected_model_id = model_map[model_choice]
