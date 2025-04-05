@@ -1,6 +1,8 @@
 import streamlit as st
 from transformers import pipeline
 from groq import Groq
+import os
+from dotenv import load_dotenv
 from datetime import datetime
 
 # ------------------------
@@ -15,9 +17,8 @@ emotion_classifier = pipeline(
 # ------------------------
 # Initialize Groq Client
 # ------------------------
-GROQ_API_KEY = "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"  # Replace this with your actual key
-client = Groq(api_key=GROQ_API_KEY)
-
+load_dotenv()
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 # ------------------------
 # Setup session state
 # ------------------------
