@@ -50,4 +50,9 @@ We use the Hugging Face model [`michellejieli/emotion_text_classifier`](https://
 git clone https://github.com/your-username/aia-chatbot.git
 cd aia-chatbot
 
-# Create and activate a virtual environment:
+
+2. **Create and activate a virtual environment:**
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
