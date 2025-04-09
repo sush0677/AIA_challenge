@@ -68,3 +68,9 @@ pip install -r requirements.txt
 GROQ_API_KEY=your-groq-api-key
 HF_TOKEN=your-huggingface-access-token
 ```
+
+5. **Run the app:**
+
+```bash
+streamlit run app.py
+```
