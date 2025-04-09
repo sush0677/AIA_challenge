@@ -62,7 +62,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4.**Create a .env file in the root folder and add:**
+4. **Create a .env file in the root folder and add:**
 
 ```bash
 GROQ_API_KEY=your-groq-api-key
