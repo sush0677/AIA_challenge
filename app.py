@@ -58,9 +58,8 @@ Type a message below and see AIA respond to your emotion in real time.
 # Reset Chat Button
 # ------------------------
 if st.button("🔄 Reset Chat"):
-    st.session_state.history = []
-    st.session_state.emotion_tags = []
-    st.experimental_rerun()
+    st.session_state.clear()
+
 
 # ------------------------
 # Emotion Color Mapping
