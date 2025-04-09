@@ -50,6 +50,7 @@ We use the Hugging Face model [`michellejieli/emotion_text_classifier`](https://
 git clone https://github.com/your-username/aia-chatbot.git
 cd aia-chatbot
 
+```
 
 2. **Create and activate a virtual environment:**
 
