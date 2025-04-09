@@ -13,7 +13,7 @@ We use the Hugging Face model [`michellejieli/emotion_text_classifier`](https://
 ## 🖼️ Interface Preview
 
 ![AIA Chatbot Interface](assets/aia-interface.png)
-(assets/image.png)
+![AIA Chatbot Interface](assets/image.png)
 ---
 
 ## 💡 Features
