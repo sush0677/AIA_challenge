@@ -6,19 +6,30 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 # ------------------------
-# Load Emotion Classifier
+# Load .env for local use
+# ------------------------
+load_dotenv()
+
+# ------------------------
+# Get secrets safely
+# ------------------------
+groq_key = st.secrets["GROQ_API_KEY"] if "GROQ_API_KEY" in st.secrets else os.getenv("GROQ_API_KEY")
+hf_token = st.secrets["HF_TOKEN"] if "HF_TOKEN" in st.secrets else os.getenv("HF_TOKEN")
+
+# ------------------------
+# Load Emotion Classifier with Hugging Face Token
 # ------------------------
 emotion_classifier = pipeline(
     "text-classification",
     model="michellejieli/emotion_text_classifier",
-    return_all_scores=False
+    return_all_scores=False,
+    token=hf_token
 )
 
 # ------------------------
 # Initialize Groq Client
 # ------------------------
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = Groq(api_key=groq_key)
 
 # ------------------------
 # Setup session state
@@ -196,4 +207,3 @@ if st.session_state.history:
 
     filename = f"chat_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     st.download_button("💾 Download Chat with AIA", full_chat, file_name=filename)
-
