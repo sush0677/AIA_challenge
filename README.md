@@ -56,3 +56,15 @@ cd aia-chatbot
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
+3. **Install dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
+4.**Create a .env file in the root folder and add:**
+
+```bash
+GROQ_API_KEY=your-groq-api-key
+HF_TOKEN=your-huggingface-access-token
+```
