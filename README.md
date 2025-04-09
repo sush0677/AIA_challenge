@@ -12,8 +12,6 @@ We use the Hugging Face model [`michellejieli/emotion_text_classifier`](https://
 
 ## 🖼️ Interface Preview
 
-> *(Insert your screenshot image in the `assets` folder and update the path below)*
-
 ![AIA Chatbot Interface](assets/aia-interface.png)
 
 ---
