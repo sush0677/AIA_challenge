@@ -47,7 +47,7 @@ st.set_page_config(page_title="AIA - Emotion-Aware Chatbot", page_icon="🤖")
 st.title("🤖 AIA - Emotion-Aware Chatbot")
 st.markdown("""
 ### 🧠 Meet AIA
-**AIA** is your Emotion-Aware AI Assistant powered by LLaMA 3 and Hugging Face.
+**AIA** is your Emotion-Aware AI Assistant powered by Groq and Hugging Face.
 
 It detects how you're feeling — sadness, joy, anger, and more — and replies with empathy and intelligence.
 
