@@ -3,6 +3,12 @@
 **AIA** is an intelligent, emotion-aware chatbot designed to dynamically adapt its conversational tone based on user emotions. Built using a powerful Hugging Face model and accelerated with Groq's lightning-fast large language models, AIA delivers highly personalized, empathetic responses in real time.
 
 ---
+## 🎥 Watch the Live Demo
+
+Check out the full walkthrough and demo on YouTube:  
+📺 [Watch here](https://youtu.be/zLB3NETrFOA?si=V5RZtlpGB8EJmfHJ)
+
+---
 
 ## 🧠 Emotion Classifier Model
 
