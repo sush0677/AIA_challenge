@@ -80,3 +80,21 @@ HF_TOKEN=your-huggingface-access-token
 ```bash
 streamlit run app.py
 ```
+
+---
+
+📁 Folder Structure
+
+```bash
+aia-chatbot/
+│
+├── app.py                  # Main Streamlit app
+├── requirements.txt        # Python dependencies
+├── .env                    # API credentials (ignored by Git)
+├── .gitignore
+├── README.md
+└── assets/
+    ├── aia-interface.png   # Screenshot of main UI
+    └── image.png           # Emotion demo preview
+
+```
